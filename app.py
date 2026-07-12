@@ -16,117 +16,163 @@ st.set_page_config(
 
 
 THEME = {
-    "bg": "#f7f4ed",
-    "surface": "#ffffff",
-    "ink": "#1f2937",
-    "muted": "#5f6b7a",
-    "brand": "#0f766e",
-    "brand_soft": "#d1fae5",
-    "accent": "#c2410c",
-    "border": "#e5ddd0",
-    "shadow": "0 12px 30px rgba(31, 41, 55, 0.10)",
+    "bg": "#0B0F19",
+    "surface": "rgba(22, 28, 36, 0.7)",
+    "ink": "#F8FAFC",
+    "muted": "#94A3B8",
+    "brand": "#38BDF8",
+    "brand_soft": "rgba(56, 189, 248, 0.15)",
+    "accent": "#F43F5E",
+    "border": "rgba(255, 255, 255, 0.08)",
+    "shadow": "0 8px 32px 0 rgba(0, 0, 0, 0.37)",
+    "glass": "backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);"
 }
 
 
 st.markdown(
     f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 html, body, [class*="css"] {{
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Outfit', sans-serif;
     color: {THEME['ink']};
 }}
 
 .stApp {{
-    background:
-        radial-gradient(circle at 9% 8%, #ffe9cc 0%, transparent 30%),
-        radial-gradient(circle at 92% 10%, #d7faf3 0%, transparent 28%),
-        linear-gradient(180deg, {THEME['bg']} 0%, #faf7f1 100%);
+    background: linear-gradient(135deg, #0B0F19 0%, #111827 100%);
+    background-image: radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.08), transparent 25%),
+                      radial-gradient(circle at 85% 30%, rgba(244, 63, 94, 0.08), transparent 25%);
 }}
 
 [data-testid="stSidebar"] {{
-    background: linear-gradient(180deg, #fff8ee 0%, #fff 100%);
+    background: rgba(15, 23, 42, 0.8) !important;
+    {THEME['glass']}
     border-right: 1px solid {THEME['border']};
 }}
 
 .hero {{
     background: {THEME['surface']};
+    {THEME['glass']}
     border: 1px solid {THEME['border']};
-    border-radius: 20px;
-    padding: 18px 22px;
+    border-radius: 24px;
+    padding: 24px 32px;
     box-shadow: {THEME['shadow']};
-    margin-bottom: 14px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+}}
+
+.hero::before {{
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, {THEME['brand']}, {THEME['accent']});
 }}
 
 .hero h1 {{
     margin: 0;
     letter-spacing: -0.02em;
-    color: #0b3c37;
-    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    background: linear-gradient(90deg, #FFFFFF, #94A3B8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 800;
 }}
 
 .hero p {{
-    margin: 8px 0 0;
+    margin: 12px 0 0;
     color: {THEME['muted']};
-    font-size: 1rem;
+    font-size: 1.1rem;
 }}
 
 .metric-card {{
     background: {THEME['surface']};
+    {THEME['glass']}
     border: 1px solid {THEME['border']};
-    border-radius: 16px;
-    padding: 14px 16px;
-    min-height: 108px;
-    box-shadow: 0 8px 24px rgba(31, 41, 55, 0.08);
-    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    border-radius: 20px;
+    padding: 20px;
+    min-height: 120px;
+    box-shadow: {THEME['shadow']};
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}}
+
+.metric-card::after {{
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}}
+
+.metric-card:hover::after {{
+    opacity: 1;
 }}
 
 .metric-card:hover {{
-    transform: translateY(-3px);
-    box-shadow: 0 16px 34px rgba(15, 118, 110, 0.18);
-    border-color: #99f6e4;
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.15);
+    border-color: rgba(56, 189, 248, 0.5);
 }}
 
 .metric-label {{
-    color: {THEME['muted']};
-    font-size: 0.84rem;
-    margin-bottom: 8px;
+    color: {THEME['brand']};
+    font-size: 0.85rem;
+    margin-bottom: 12px;
     text-transform: uppercase;
     font-weight: 700;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.1em;
 }}
 
 .metric-value {{
     color: {THEME['ink']};
-    font-size: 1.52rem;
+    font-size: 2rem;
     font-weight: 800;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }}
 
 .notice {{
     border-left: 4px solid {THEME['brand']};
-    background: {THEME['surface']};
-    border-radius: 10px;
+    background: rgba(56, 189, 248, 0.05);
+    {THEME['glass']}
+    border-radius: 12px;
     border-top: 1px solid {THEME['border']};
     border-right: 1px solid {THEME['border']};
     border-bottom: 1px solid {THEME['border']};
-    padding: 10px 12px;
+    padding: 16px 20px;
     color: {THEME['muted']};
+    font-weight: 500;
 }}
 
 .small-title {{
-    font-size: 1.02rem;
+    font-size: 1.2rem;
     color: {THEME['ink']};
-    margin-bottom: 6px;
-    font-weight: 800;
+    margin-bottom: 12px;
+    font-weight: 700;
+    border-bottom: 1px solid {THEME['border']};
+    padding-bottom: 8px;
 }}
 
 .task-check {{
-    background: #fffbf5;
-    border: 1px dashed {THEME['border']};
+    background: rgba(244, 63, 94, 0.05);
+    border: 1px dashed {THEME['accent']};
     border-radius: 12px;
-    padding: 10px 12px;
-    margin-top: 8px;
+    padding: 16px 20px;
+    margin-top: 16px;
+    color: {THEME['ink']};
+}}
+
+/* Dark Mode Dataframes */
+[data-testid="stDataFrame"] {{
+    background: rgba(22, 28, 36, 0.5);
+    border-radius: 12px;
+    padding: 10px;
+    border: 1px solid {THEME['border']};
 }}
 </style>
 """,
@@ -320,11 +366,19 @@ if page == "Executive Dashboard":
             x="Year",
             y="Sales",
             title="Total Sales by Year",
-            color_discrete_sequence=["#0f766e"],
+            color_discrete_sequence=["#38BDF8"],
             text_auto=".3s",
         )
-        fig.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
-        st.plotly_chart(fig, width="stretch")
+        fig.update_layout(
+            template="plotly_dark",
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            hovermode="x unified",
+            margin=dict(t=50, l=10, r=10, b=10),
+            font=dict(family="Outfit, sans-serif", color="#F8FAFC"),
+        )
+        fig.update_traces(marker_line_color="#0B0F19", marker_line_width=1.5, opacity=0.9, hovertemplate="<b>%{x}</b><br>Sales: $%{y:,.0f}<extra></extra>")
+        st.plotly_chart(fig, width="stretch", use_container_width=True)
 
     with c2:
         monthly = (
@@ -338,10 +392,18 @@ if page == "Executive Dashboard":
             y="Sales",
             markers=True,
             title="Monthly Sales Trend",
-            color_discrete_sequence=["#c2410c"],
+            color_discrete_sequence=["#F43F5E"],
         )
-        fig.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
-        st.plotly_chart(fig, width="stretch")
+        fig.update_layout(
+            template="plotly_dark",
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            hovermode="x unified",
+            margin=dict(t=50, l=10, r=10, b=10),
+            font=dict(family="Outfit, sans-serif", color="#F8FAFC"),
+        )
+        fig.update_traces(line=dict(width=3), marker=dict(size=8, symbol="diamond"), hovertemplate="<b>%{x}</b><br>Sales: $%{y:,.0f}<extra></extra>")
+        st.plotly_chart(fig, width="stretch", use_container_width=True)
 
     c3, c4 = st.columns(2)
     with c3:
@@ -350,12 +412,19 @@ if page == "Executive Dashboard":
             cat_mix,
             names="Category",
             values="Sales",
-            hole=0.48,
+            hole=0.6,
             title="Revenue Mix by Category",
-            color_discrete_sequence=px.colors.sequential.Tealgrn,
+            color_discrete_sequence=["#38BDF8", "#F43F5E", "#10B981", "#8B5CF6"],
         )
-        fig.update_layout(paper_bgcolor="rgba(0,0,0,0)")
-        st.plotly_chart(fig, width="stretch")
+        fig.update_layout(
+            template="plotly_dark",
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            margin=dict(t=50, l=10, r=10, b=10),
+            font=dict(family="Outfit, sans-serif", color="#F8FAFC"),
+        )
+        fig.update_traces(hoverinfo="label+percent+value", textinfo="label+percent", marker=dict(line=dict(color="#0B0F19", width=2)))
+        st.plotly_chart(fig, width="stretch", use_container_width=True)
 
     with c4:
         reg_mix = dff.groupby("Region", as_index=False)["Sales"].sum()
@@ -365,14 +434,19 @@ if page == "Executive Dashboard":
             y="Sales",
             color="Region",
             title="Regional Sales Distribution",
-            color_discrete_sequence=px.colors.qualitative.Bold,
+            color_discrete_sequence=["#38BDF8", "#F43F5E", "#10B981", "#8B5CF6"],
         )
         fig.update_layout(
+            template="plotly_dark",
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
             showlegend=False,
+            hovermode="x unified",
+            margin=dict(t=50, l=10, r=10, b=10),
+            font=dict(family="Outfit, sans-serif", color="#F8FAFC"),
         )
-        st.plotly_chart(fig, width="stretch")
+        fig.update_traces(marker_line_color="#0B0F19", marker_line_width=1.5, opacity=0.9, hovertemplate="<b>%{x}</b><br>Sales: $%{y:,.0f}<extra></extra>")
+        st.plotly_chart(fig, width="stretch", use_container_width=True)
 
     st.markdown('<div class="notice">This page aligns with Task 1 and Task 2 requirements: yearly/monthly trends, category-region comparisons, and operational KPIs.</div>', unsafe_allow_html=True)
 
@@ -426,10 +500,19 @@ elif page == "Forecast Explorer":
         color="Type",
         markers=True,
         title=f"Historical vs Forecast: {seg}",
-        color_discrete_map={"Historical": "#0f766e", "Forecast": "#c2410c"},
+        color_discrete_map={"Historical": "#38BDF8", "Forecast": "#F43F5E"},
     )
-    fig.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
-    st.plotly_chart(fig, width="stretch")
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)", 
+        plot_bgcolor="rgba(0,0,0,0)",
+        hovermode="x unified",
+        margin=dict(t=50, l=10, r=10, b=10),
+        font=dict(family="Outfit, sans-serif", color="#F8FAFC"),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+    )
+    fig.update_traces(line=dict(width=3), marker=dict(size=8))
+    st.plotly_chart(fig, width="stretch", use_container_width=True)
 
     m1, m2, m3 = st.columns(3)
     with m1:
@@ -473,8 +556,10 @@ elif page == "Anomaly Intelligence":
             x=weekly_anom["Date"],
             y=weekly_anom["Sales"],
             name="Weekly Sales",
-            mode="lines",
-            line=dict(color="#1f2937", width=1.8),
+            mode="lines+markers",
+            line=dict(color="#94A3B8", width=2),
+            marker=dict(size=4),
+            hovertemplate="<b>%{x}</b><br>Sales: $%{y:,.0f}<extra></extra>"
         )
     )
 
@@ -487,7 +572,8 @@ elif page == "Anomaly Intelligence":
             y=if_pts["Sales"],
             mode="markers",
             name="Isolation Forest",
-            marker=dict(color="#c2410c", size=10, symbol="x"),
+            marker=dict(color="#F43F5E", size=12, symbol="x", line=dict(width=2, color="#0B0F19")),
+            hovertemplate="<b>%{x}</b><br>Sales: $%{y:,.0f}<br>Method: Isolation Forest<extra></extra>"
         )
     )
     fig.add_trace(
@@ -496,17 +582,23 @@ elif page == "Anomaly Intelligence":
             y=z_pts["Sales"],
             mode="markers",
             name="Z-Score > 2",
-            marker=dict(color="#0f766e", size=9, symbol="circle"),
+            marker=dict(color="#38BDF8", size=12, symbol="circle", line=dict(width=2, color="#0B0F19")),
+            hovertemplate="<b>%{x}</b><br>Sales: $%{y:,.0f}<br>Method: Z-Score<extra></extra>"
         )
     )
     fig.update_layout(
-        title="Weekly Sales Anomalies",
-        xaxis_title="Date",
-        yaxis_title="Sales",
+        title="Weekly Sales Anomalies with Dual-Detection",
+        xaxis_title="",
+        yaxis_title="Sales Revenue",
+        template="plotly_dark",
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
+        hovermode="x unified",
+        margin=dict(t=50, l=10, r=10, b=10),
+        font=dict(family="Outfit, sans-serif", color="#F8FAFC"),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, width="stretch", use_container_width=True)
 
     flagged = weekly_anom[weekly_anom["Method"] != "None"].copy()
     flagged["Reason"] = flagged.apply(
@@ -548,15 +640,21 @@ else:
         color="Segment Name",
         size="Total_Volume",
         hover_name="Sub-Category",
-        color_discrete_sequence=px.colors.qualitative.Set2,
+        color_discrete_sequence=["#38BDF8", "#F43F5E", "#10B981", "#8B5CF6"],
         title="Sub-Category Clusters in PCA Space",
     )
     fig.update_layout(
+        template="plotly_dark",
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         legend_title="Demand Cluster",
+        hovermode="closest",
+        margin=dict(t=50, l=10, r=10, b=10),
+        font=dict(family="Outfit, sans-serif", color="#F8FAFC"),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
     )
-    st.plotly_chart(fig, width="stretch")
+    fig.update_traces(marker=dict(line=dict(width=1, color="#0B0F19")), opacity=0.8)
+    st.plotly_chart(fig, width="stretch", use_container_width=True)
 
     strategy = pd.DataFrame(
         {
